@@ -545,7 +545,7 @@ void omap_dm_timer_set_int_disable(struct omap_dm_timer *timer,
                                         unsigned int value)
 {
         u32 l;
-        struct dmtimer_platform_data *pdata = timer->pdev->dev.platform_data;
+    //    struct dmtimer_platform_data *pdata = timer->pdev->dev.platform_data;
 
         omap_dm_timer_enable(timer);
 

@@ -321,6 +321,7 @@ int twl6030_mmc_card_detect(struct device *dev, int slot)
 {
 	int ret = -EIO;
 	u8 read_reg = 0;
+	int polarity=0;
 	struct platform_device *pdev = to_platform_device(dev);
 
 	if (pdev->id) {
@@ -336,8 +337,12 @@ int twl6030_mmc_card_detect(struct device *dev, int slot)
 	 */
 	ret = twl_i2c_read_u8(TWL6030_MODULE_ID0, &read_reg,
 						TWL6030_MMCCTRL);
+	if ( read_reg & 0x04 )
+	    polarity = 1;
 	if (ret >= 0)
 		ret = read_reg & STS_MMC;
+	if (polarity == 1 )
+		ret ^= 1;
 	return ret;
 }
 EXPORT_SYMBOL(twl6030_mmc_card_detect);

@@ -1,4 +1,4 @@
-/*6
+/*
  * Board support file for OMAP4430 SDP.
  *
  * Copyright (C) 2009 Texas Instruments
@@ -727,11 +727,17 @@ static struct omap2_hsmmc_info mmc[] = {
 };
 
 static struct regulator_consumer_supply sdp4430_vaux1_supply[] = {
-	REGULATOR_SUPPLY("vmmc", "omap_hsmmc.1"),
+ 	{
+		.supply = "vmmc",
+ 		.dev_name = "omap_hsmmc.0",
+ 	},
 };
 
 static struct regulator_consumer_supply sdp4430_vmmc_supply[] = {
-	REGULATOR_SUPPLY("vmmc", "omap-hsmmc.0"),
+	{
+ 		.supply = "vemmc",
+		.dev_name = "omap_hsmmc.1",
+	},
 };
 
 // static struct regulator_consumer_supply sdp4430_vemmc_supply[] = {
@@ -833,6 +839,7 @@ static struct regulator_init_data sdp4430_vaux1 = {
 		.valid_ops_mask	 = REGULATOR_CHANGE_VOLTAGE
 					| REGULATOR_CHANGE_MODE
 					| REGULATOR_CHANGE_STATUS,
+			.always_on	= true,					
 	},
 	.num_consumer_supplies  = ARRAY_SIZE(sdp4430_vaux1_supply),
 	.consumer_supplies      = sdp4430_vaux1_supply,
@@ -885,10 +892,11 @@ static struct regulator_init_data sdp4430_vmmc = {
                 .valid_ops_mask  = REGULATOR_CHANGE_VOLTAGE
                         | REGULATOR_CHANGE_MODE
                         | REGULATOR_CHANGE_STATUS,
-                .state_mem = {
-                        .enabled        = false,
-                        .disabled       = true,
-                },
+//                 .state_mem = {
+//                         .enabled        = false,
+//                         .disabled       = true,
+//                 },
+				.always_on	= true,
         },
         .num_consumer_supplies  = 1,
         .consumer_supplies      = sdp4430_vmmc_supply,
@@ -1797,10 +1805,8 @@ void __init acclaim_panel_init(void)
 	early_print("Display init\n");
 	omap_display_init(&sdp4430_dss_data);
         
-/*	
-
-	early_print("Platform add devices\n");
-        platform_add_devices(sdp4430_devices, ARRAY_SIZE(sdp4430_devices));*/
+//	early_print("Platform add devices\n");
+  //      platform_add_devices(sdp4430_lcd_devices, ARRAY_SIZE(sdp4430_lcd_devices));
         
 }
 

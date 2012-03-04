@@ -183,11 +183,12 @@ static int max17042_get_property(struct power_supply *psy,
 static int __devinit max17042_probe(struct i2c_client *client,
 			const struct i2c_device_id *id)
 {
-	printk(KERN_INFO,"MAX17042 device probe start\n");
+	
 	struct i2c_adapter *adapter = to_i2c_adapter(client->dev.parent);
 	struct max17042_chip *chip;
 	int ret;
-
+	
+	printk(KERN_INFO "MAX17042 device probe start\n");
 	if (!i2c_check_functionality(adapter, I2C_FUNC_SMBUS_WORD_DATA))
 		return -EIO;
 

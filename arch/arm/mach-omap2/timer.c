@@ -358,7 +358,7 @@ static int omap2_dm_timer_set_src(struct platform_device *pdev, int source)
 	int ret;
 	struct dmtimer_platform_data *pdata = pdev->dev.platform_data;
 	struct clk *fclk, *parent;
-	char *parent_name = NULL;
+	char *parent_name = "32k_ck"; /* default name */
 
 	fclk = clk_get(&pdev->dev, "fck");
 	if (IS_ERR_OR_NULL(fclk)) {
